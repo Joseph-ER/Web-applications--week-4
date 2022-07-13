@@ -1,0 +1,9 @@
+<html>
+  <head>All albums</head>
+  <body>
+    <h1> <% @albums.each do |album| %></h1>
+    <p> <br> -------------------</p>
+      <p> Title: <%=album.title%>, Release year <%=album.release_year%></p>
+    <% end %>
+  </body>
+</html>

@@ -22,6 +22,7 @@ describe Application do
     expect(response.status).to eq(200)
     expect(response.body).to include ('<p> Title: Doolittle, Release year 1989</p>')
     expect(response.body).to include ('<p> Title: Waterloo')
+    expect(response.body).to include('<a href="/albums/3">Go to the about page</a>')
   end
 
   it "returns all artiss and returns 200 OK" do

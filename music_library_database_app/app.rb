@@ -14,6 +14,10 @@ class Application < Sinatra::Base
     also_reload 'lib/artist_repository'
   end
 
+  get "/artists/new" do
+    return erb(:new_artist)
+  end
+
   get "/albums/new" do
     return erb(:new_album)
   end
@@ -43,7 +47,7 @@ class Application < Sinatra::Base
   end
 
   post "/albums" do
-    if invalid_request_parameters?
+    if invalid_request_parameters_album?
       status 400
       return " "
     end
@@ -57,7 +61,24 @@ class Application < Sinatra::Base
     return " "
   end
 
-  def invalid_request_parameters?
+  post "/artists" do
+    if invalid_request_parameters_artist?
+      status 400
+      return " "
+    end
+
+    repo = ArtistRepository.new
+    new_artist = Artist.new
+    new_artist.name = params[:name]
+    new_artist.genre = params[:genre]
+    repo.create(new_artist)
+    return " "
+  end
+
+  def invalid_request_parameters_artist?
+    return (params[:name] == nil || params[:genre] == nil)
+  end
+  def invalid_request_parameters_album?
     return (params[:title] == nil || params[:release_year] == nil || params[:artist_id] == nil)
   end
 end
